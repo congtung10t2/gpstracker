@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0447029E23F3B26E005CD380 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447029D23F3B26E005CD380 /* CoreDataManager.swift */; };
+		044702A023F3B2DF005CD380 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447029F23F3B2DF005CD380 /* LocationModel.swift */; };
+		044702A323F3B828005CD380 /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 044702A123F3B828005CD380 /* LocationModel.xcdatamodeld */; };
+		0448900923F645110037E82B /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448900823F645110037E82B /* DataView.swift */; };
+		0466486423F6A80400DA12E4 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466486323F6A80400DA12E4 /* UIView+Extension.swift */; };
 		047E6D5F23F2450900AD9632 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D5E23F2450900AD9632 /* AppDelegate.swift */; };
 		047E6D6123F2450900AD9632 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D6023F2450900AD9632 /* SceneDelegate.swift */; };
 		047E6D6323F2450900AD9632 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D6223F2450900AD9632 /* ContentView.swift */; };
 		047E6D6523F2450B00AD9632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 047E6D6423F2450B00AD9632 /* Assets.xcassets */; };
 		047E6D6823F2450B00AD9632 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 047E6D6723F2450B00AD9632 /* Preview Assets.xcassets */; };
 		047E6D6B23F2450B00AD9632 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 047E6D6923F2450B00AD9632 /* LaunchScreen.storyboard */; };
+		04C932C823F2A3FA0005F264 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C932C723F2A3FA0005F264 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0447029D23F3B26E005CD380 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0447029F23F3B2DF005CD380 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		044702A223F3B828005CD380 /* LocationModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationModel.xcdatamodel; sourceTree = "<group>"; };
+		0448900823F645110037E82B /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		0466486323F6A80400DA12E4 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		047E6D5B23F2450900AD9632 /* LocationData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		047E6D5E23F2450900AD9632 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		047E6D6023F2450900AD9632 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +35,7 @@
 		047E6D6723F2450B00AD9632 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		047E6D6A23F2450B00AD9632 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		047E6D6C23F2450B00AD9632 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04C932C723F2A3FA0005F264 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +52,7 @@
 		047E6D5223F2450900AD9632 = {
 			isa = PBXGroup;
 			children = (
+				044702A123F3B828005CD380 /* LocationModel.xcdatamodeld */,
 				047E6D5D23F2450900AD9632 /* LocationData */,
 				047E6D5C23F2450900AD9632 /* Products */,
 			);
@@ -63,6 +76,11 @@
 				047E6D6923F2450B00AD9632 /* LaunchScreen.storyboard */,
 				047E6D6C23F2450B00AD9632 /* Info.plist */,
 				047E6D6623F2450B00AD9632 /* Preview Content */,
+				04C932C723F2A3FA0005F264 /* LocationManager.swift */,
+				0447029D23F3B26E005CD380 /* CoreDataManager.swift */,
+				0447029F23F3B2DF005CD380 /* LocationModel.swift */,
+				0448900823F645110037E82B /* DataView.swift */,
+				0466486323F6A80400DA12E4 /* UIView+Extension.swift */,
 			);
 			path = LocationData;
 			sourceTree = "<group>";
@@ -101,6 +119,9 @@
 		047E6D5323F2450900AD9632 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = iMac;
@@ -146,9 +167,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044702A323F3B828005CD380 /* LocationModel.xcdatamodeld in Sources */,
+				04C932C823F2A3FA0005F264 /* LocationManager.swift in Sources */,
 				047E6D5F23F2450900AD9632 /* AppDelegate.swift in Sources */,
+				0466486423F6A80400DA12E4 /* UIView+Extension.swift in Sources */,
 				047E6D6123F2450900AD9632 /* SceneDelegate.swift in Sources */,
 				047E6D6323F2450900AD9632 /* ContentView.swift in Sources */,
+				044702A023F3B2DF005CD380 /* LocationModel.swift in Sources */,
+				0448900923F645110037E82B /* DataView.swift in Sources */,
+				0447029E23F3B26E005CD380 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +369,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		044702A123F3B828005CD380 /* LocationModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				044702A223F3B828005CD380 /* LocationModel.xcdatamodel */,
+			);
+			currentVersion = 044702A223F3B828005CD380 /* LocationModel.xcdatamodel */;
+			path = LocationModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 047E6D5323F2450900AD9632 /* Project object */;
 }
