@@ -19,7 +19,7 @@ class CoreDataManager {
     
     guard let appDelegate =
       UIApplication.shared.delegate as? AppDelegate else {
-      return
+        return
     }
     
     // 1
@@ -32,7 +32,7 @@ class CoreDataManager {
                                  in: managedContext)!
     
     let location = NSManagedObject(entity: entity,
-                                 insertInto: managedContext)
+                                   insertInto: managedContext)
     
     // 3
     location.setValue(locationModel.course, forKeyPath: "course")
@@ -43,17 +43,17 @@ class CoreDataManager {
     location.setValue(locationModel.verticalAccuracy, forKeyPath: "verticalAccuracy")
     location.setValue(locationModel.speed, forKeyPath: "speed")
     location.setValue(locationModel.timestamp, forKeyPath: "timestamp")
-   
+    
     locationAdded.append(location)
     
   }
   func save(name: String) -> Bool{
     guard let appDelegate =
       UIApplication.shared.delegate as? AppDelegate else {
-      return false
+        return false
     }
     let managedContext =
-    appDelegate.persistentContainer.viewContext
+      appDelegate.persistentContainer.viewContext
     
     do {
       for location in locationAdded {
@@ -87,11 +87,21 @@ class CoreDataManager {
     //3
     do {
       locationData = try managedContext.fetch(fetchRequest)
-      for location in locationData {
-        let model = location.locationModel
-        print(model);
-      }
-      return locationData.map({$0.locationModel})
+      //      for location in locationData {
+      //        if location.locationModel != nil {Ơ}
+      //        let model = location.locationModel
+      //        print(model);
+      //      }
+      return locationData.filter({
+        $0 != nil
+        
+      }).map({
+        $0.locationModel
+        
+      }).filter({
+        $0 != nil
+        
+      })
       
     } catch let error as NSError {
       
@@ -125,11 +135,44 @@ class CoreDataManager {
     return []
     
   }
+  func removeDataByName(name: String) {
+    guard let appDelegate =
+      UIApplication.shared.delegate as? AppDelegate else {
+        return
+    }
+    
+    let managedContext =
+      appDelegate.persistentContainer.viewContext
+    
+    //2
+    let fetchRequest =
+      NSFetchRequest<NSManagedObject>(entityName: "Location")
+    
+    //3
+    do {
+      locationData = try managedContext.fetch(fetchRequest)
+      for location in locationData {
+        if location != nil && location.locationModel != nil {
+          if location.locationModel.name == name {
+            managedContext.delete(location)
+          }
+        }
+        
+      }
+      try managedContext.save()
+      return
+      
+    } catch let error as NSError {
+      
+      print("Could not fetch. \(error), \(error.userInfo)")
+      return
+    }
+  }
 }
 
 extension NSManagedObject {
   var locationModel: LocationModel {
-
+    
     let course = self.value(forKey: "course") as! Double
     let altitude = self.value(forKey: "altitude") as! Double
     let horizontalAccuracy = self.value(forKey: "horizontalAccuracy") as! Double
@@ -138,7 +181,11 @@ extension NSManagedObject {
     let verticalAccuracy = self.value(forKey: "verticalAccuracy") as! Double
     let speed = self.value(forKey: "speed") as! Double
     let timestamp = self.value(forKey: "timestamp") as! CLongLong
-    let name = self.value(forKey: "name") as! String
+    var name : String?
+    if(value(forKey: "name") != nil){
+      
+      name = self.value(forKey: "name") as! String
+    }
     return LocationModel(name: name, lat: lat, lng: lng, altitude: altitude, timestamp: timestamp, speed: speed, course: course, horizontalAccuracy: horizontalAccuracy, verticalAccuracy: verticalAccuracy)
   }
 }

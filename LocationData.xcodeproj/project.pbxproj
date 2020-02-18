@@ -12,6 +12,7 @@
 		044702A323F3B828005CD380 /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 044702A123F3B828005CD380 /* LocationModel.xcdatamodeld */; };
 		0448900923F645110037E82B /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448900823F645110037E82B /* DataView.swift */; };
 		0466486423F6A80400DA12E4 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0466486323F6A80400DA12E4 /* UIView+Extension.swift */; };
+		0472859223FBC93B00852D7E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0472859123FBC93B00852D7E /* Components.swift */; };
 		047E6D5F23F2450900AD9632 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D5E23F2450900AD9632 /* AppDelegate.swift */; };
 		047E6D6123F2450900AD9632 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D6023F2450900AD9632 /* SceneDelegate.swift */; };
 		047E6D6323F2450900AD9632 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E6D6223F2450900AD9632 /* ContentView.swift */; };
@@ -27,6 +28,7 @@
 		044702A223F3B828005CD380 /* LocationModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationModel.xcdatamodel; sourceTree = "<group>"; };
 		0448900823F645110037E82B /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		0466486323F6A80400DA12E4 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		0472859123FBC93B00852D7E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		047E6D5B23F2450900AD9632 /* LocationData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		047E6D5E23F2450900AD9632 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		047E6D6023F2450900AD9632 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				0447029F23F3B2DF005CD380 /* LocationModel.swift */,
 				0448900823F645110037E82B /* DataView.swift */,
 				0466486323F6A80400DA12E4 /* UIView+Extension.swift */,
+				0472859123FBC93B00852D7E /* Components.swift */,
 			);
 			path = LocationData;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				047E6D6123F2450900AD9632 /* SceneDelegate.swift in Sources */,
 				047E6D6323F2450900AD9632 /* ContentView.swift in Sources */,
 				044702A023F3B2DF005CD380 /* LocationModel.swift in Sources */,
+				0472859223FBC93B00852D7E /* Components.swift in Sources */,
 				0448900923F645110037E82B /* DataView.swift in Sources */,
 				0447029E23F3B26E005CD380 /* CoreDataManager.swift in Sources */,
 			);
