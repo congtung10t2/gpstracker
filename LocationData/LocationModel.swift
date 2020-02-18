@@ -30,3 +30,11 @@ import CoreData
     self.verticalAccuracy = verticalAccuracy
   }
 }
+extension LocationModel {
+  func getDateAsString() -> String {
+    let exactDate = NSDate(timeIntervalSince1970: TimeInterval(truncating: NSNumber(integerLiteral: Int(self.timestamp))))
+     let dateFormatt = DateFormatter()
+     dateFormatt.dateFormat = "dd/MM/yyy hh:mm:ss a"
+    return dateFormatt.string(from: exactDate as Date)
+  }
+}

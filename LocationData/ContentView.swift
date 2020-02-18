@@ -9,11 +9,7 @@
 import SwiftUI
 import MapKit
 struct ContentView: View {
-  @State private var locationName: String = "" {
-    didSet {
-      LocationManager.shared.currentLocationName = self.locationName
-    }
-  }
+  @State private var locationName: String = ""
   @State private var isUpdatingLocation: Bool = false
   @State private var dataSaved: Bool = true
   @State private var dataCancelled: Bool = false
@@ -31,7 +27,7 @@ struct ContentView: View {
           self.dataSaved = false
           self.hasRecorded = true
           CoreDataManager.shared.locationAdded = []
-        }) {
+          }) {
           Text("Start update")
           
         }
@@ -50,7 +46,7 @@ struct ContentView: View {
         HStack(alignment: .top) {
           TextField("Nhập tên bản ghi", text: $locationName).frame(width: 150, height: 20, alignment: .leading)
           Button(action: {
-            if(CoreDataManager.shared.save()) {
+            if(CoreDataManager.shared.save(name: self.locationName)) {
               self.dataSaved = true
             }
           }) {
@@ -87,13 +83,37 @@ struct AllTabView: View {
         
         Image(systemName: "house.fill")
         Text("Home")
-      }.tag(0)
-      Text("show recent data").tabItem{
+        }.tag(0)
+      History().tabItem{
         
         Image(systemName: "doc.richtext")
         Text("History")
       }.tag(1)
     }
+  }
+}
+struct History: View {
+  @State private var showingData: Bool = false
+  @State var items: [LocationModel] = []
+  var body: some View {
+    NavigationView {
+      List {
+        ForEach(items, id: \.self) { data in
+          VStack(alignment: .leading) {
+            Text(data.name).font(.system(size: 20))
+            Text(data.getDateAsString()).font(.system(size: 14)).foregroundColor(.gray)
+            }.onTapGesture(perform: {
+              CoreDataManager.shared.locationShowing = CoreDataManager.shared.getDataByName(name: data.name)
+              self.showingData = true
+            }).sheet(isPresented: self.$showingData) {
+              
+            DataMap()
+          }
+        }
+      }.onAppear(perform: {
+        self.items = CoreDataManager.shared.getDataByName()
+        })
+    }.navigationBarTitle("Recent data")
   }
 }
 struct AllTabViewView_Previews: PreviewProvider {
@@ -116,9 +136,6 @@ struct DataMap: View {
         self.presentationMode.wrappedValue.dismiss()
       }.position(x: 50, y:30)
     }
-    
-    
-    
   }
   
 }

@@ -9,10 +9,12 @@
 import Foundation
 import UIKit
 import CoreData
+public typealias DataCompletion<T> = (T?, NSError?) -> Void
 class CoreDataManager {
   static var shared = CoreDataManager()
   var locationData: [NSManagedObject] = []
   var locationAdded: [NSManagedObject] = []
+  var locationShowing: [LocationModel] = []
   func save(locationModel: LocationModel) {
     
     guard let appDelegate =
@@ -41,11 +43,11 @@ class CoreDataManager {
     location.setValue(locationModel.verticalAccuracy, forKeyPath: "verticalAccuracy")
     location.setValue(locationModel.speed, forKeyPath: "speed")
     location.setValue(locationModel.timestamp, forKeyPath: "timestamp")
-    location.setValue(locationModel.name, forKeyPath: "name")
+   
     locationAdded.append(location)
     
   }
-  func save() -> Bool{
+  func save(name: String) -> Bool{
     guard let appDelegate =
       UIApplication.shared.delegate as? AppDelegate else {
       return false
@@ -55,9 +57,10 @@ class CoreDataManager {
     
     do {
       for location in locationAdded {
+        location.setValue(name, forKeyPath: "name")
         managedContext.insert(location)
       }
-      
+      locationShowing = locationAdded.map({$0.locationModel})
       try managedContext.save()
       return true
     } catch {
@@ -67,13 +70,11 @@ class CoreDataManager {
   func cancel() {
     locationAdded = []
   }
-  
-  
-  func retrieveData() {
+  func retrieveData() -> [LocationModel]? {
     //1
     guard let appDelegate =
       UIApplication.shared.delegate as? AppDelegate else {
-        return 
+        return nil
     }
     
     let managedContext =
@@ -90,12 +91,42 @@ class CoreDataManager {
         let model = location.locationModel
         print(model);
       }
+      return locationData.map({$0.locationModel})
       
     } catch let error as NSError {
+      
       print("Could not fetch. \(error), \(error.userInfo)")
+      return nil
     }
   }
+  func getDataByName() -> [LocationModel]{
+    if let locations = retrieveData() {
+      var models : [LocationModel] = []
+      for data in locations {
+        if !models.contains(where: {$0.name == data.name}) {
+          models.append(data)
+        }
+      }
+      return models
+    }
+    return []
+    
+  }
+  func getDataByName(name: String) -> [LocationModel]{
+    if let locations = retrieveData() {
+      var models : [LocationModel] = []
+      for data in locations {
+        if data.name == name {
+          models.append(data)
+        }
+      }
+      return models
+    }
+    return []
+    
+  }
 }
+
 extension NSManagedObject {
   var locationModel: LocationModel {
 

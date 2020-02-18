@@ -25,7 +25,14 @@ struct MapView: UIViewRepresentable {
   func makeUIView(context: Context) -> MKMapView {
     let mapView = MKMapView()
     mapView.delegate = context.coordinator
-    mapView.addOverlay(addPolyline())
+    
+    let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+    let first = CoreDataManager.shared.locationShowing.first
+    let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: first!.lat, longitude: first!.lng), span: span)
+    mapView.setRegion(region, animated: true)
+    let polyline  = addPolyline()
+  
+    mapView.addOverlay(polyline)
     return mapView
   }
   
@@ -37,8 +44,9 @@ struct MapView: UIViewRepresentable {
     Coordinator(self)
   }
   func addPolyline() -> MKPolyline {
-    var locations = CoreDataManager.shared.locationAdded.map { CLLocationCoordinate2D(latitude: $0.locationModel.lat, longitude: $0.locationModel.lng) }
-    return MKPolyline(coordinates: &locations, count: locations.count)
+    var locations = CoreDataManager.shared.locationShowing.map { CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng) }
+
+    return MKPolyline(coordinates: locations, count: locations.count)
     
   }
   
@@ -47,6 +55,15 @@ struct MapView: UIViewRepresentable {
     
     init(_ parent: MapView) {
       self.parent = parent
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer! {
+      if(overlay is MKPolyline) {
+        let polylineRender = MKPolylineRenderer(overlay: overlay)
+        polylineRender.strokeColor = UIColor.red.withAlphaComponent(0.8)
+        return polylineRender
+      }
+      return nil
     }
   }
 }
