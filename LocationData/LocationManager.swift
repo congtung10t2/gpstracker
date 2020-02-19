@@ -83,6 +83,6 @@ extension LocationManager : CLLocationManagerDelegate {
 extension CLLocation {
   func model(name: String) -> LocationModel {
     
-    return LocationModel(name: name, lat: self.coordinate.latitude, lng: self.coordinate.longitude, altitude: self.altitude, timestamp: CLongLong(self.timestamp.timeIntervalSince1970), speed: self.speed, course: self.course, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy)
+    return LocationModel(name: name, lat: self.coordinate.latitude, lng: self.coordinate.longitude, altitude: self.altitude, timestamp: CLongLong(self.timestamp.timeIntervalSince1970 * 1000.0), speed: self.speed, course: self.course, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy)
   }
 }

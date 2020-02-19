@@ -148,6 +148,9 @@ class CoreDataManager {
           models.append(data)
         }
       }
+      models.sort {
+        $0.timestamp < $1.timestamp
+      }
       return models
     }
     return []

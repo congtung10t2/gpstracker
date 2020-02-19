@@ -24,6 +24,8 @@ struct MapView: UIViewRepresentable {
   @Binding var centerCoordinate: CLLocationCoordinate2D
   func makeUIView(context: Context) -> MKMapView {
     let mapView = MKMapView()
+    let overlays = mapView.overlays
+    mapView.removeOverlays(overlays)
     mapView.delegate = context.coordinator
     
     let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)

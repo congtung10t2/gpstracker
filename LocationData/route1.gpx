@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.mapstogpx.com">
+      <text>Sverrir Sigmundarson</text>
+    </link>
+    <!--desc>Map data copyright 2019 Google</desc-->
+    <!--copyright author="Google Inc">
+      <year>2019</year>
+      <license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/16.0946601,108.2305248/16.0652586,108.2146461/@16.080866,108.2196651,15z/data=!4m2!4m1!3e0?hl=en</url-->
+    <time>2019-12-13T16:33:04Z</time>
+  </metadata>
+  <wpt lat="16.094675" lon="108.2305078">
+    <name>WP001</name>
+    <time>2019-12-13T16:33:04Z</time>
+  </wpt>
+  <wpt lat="16.0946013" lon="108.2304376">
+    <name>WP002</name>
+    <time>2019-12-13T16:33:05Z</time>
+  </wpt>
+  <wpt lat="16.0938575" lon="108.2312953">
+    <name>WP003</name>
+    <time>2019-12-13T16:33:16Z</time>
+  </wpt>
+  <wpt lat="16.0897957" lon="108.2273751">
+    <name>WP004</name>
+    <time>2019-12-13T16:34:12Z</time>
+  </wpt>
+  <wpt lat="16.0883825" lon="108.2288902">
+    <name>WP005</name>
+    <time>2019-12-13T16:34:32Z</time>
+  </wpt>
+  <wpt lat="16.0727998" lon="108.2288825">
+    <name>WP006</name>
+    <time>2019-12-13T16:37:10Z</time>
+  </wpt>
+  <wpt lat="16.0725051" lon="108.2296716">
+    <name>WP007</name>
+    <time>2019-12-13T16:37:18Z</time>
+  </wpt>
+  <wpt lat="16.0717826" lon="108.2240352">
+    <name>WP008</name>
+    <time>2019-12-13T16:38:13Z</time>
+  </wpt>
+  <wpt lat="16.070243" lon="108.2134644">
+    <name>WP009</name>
+    <time>2019-12-13T16:39:57Z</time>
+  </wpt>
+</gpx>
