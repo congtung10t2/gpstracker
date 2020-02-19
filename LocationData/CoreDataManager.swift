@@ -11,10 +11,14 @@ import UIKit
 import CoreData
 public typealias DataCompletion<T> = (T?, NSError?) -> Void
 class CoreDataManager {
+
+
+  
   static var shared = CoreDataManager()
   var locationData: [NSManagedObject] = []
   var locationAdded: [NSManagedObject] = []
   var locationShowing: [LocationModel] = []
+
   func save(locationModel: LocationModel) {
     
     guard let appDelegate =
@@ -46,6 +50,33 @@ class CoreDataManager {
     
     locationAdded.append(location)
     
+  }
+  func saveUploadedFilesSet(fileName:[String : Any]) {
+      let file: FileHandle? = FileHandle(forWritingAtPath: "\(fileName).json")
+
+      if file != nil {
+          // Set the data we want to write
+          do{
+              if let jsonData = try JSONSerialization.data(withJSONObject: fileName, options: .init(rawValue: 0)) as? Data
+              {
+                  // Check if everything went well
+                  print(NSString(data: jsonData, encoding: 1)!)
+                  file?.write(jsonData)
+
+                  // Do something cool with the new JSON data
+              }
+          }
+          catch {
+
+          }
+          // Write it to the file
+
+          // Close the file
+          file?.closeFile()
+      }
+      else {
+          print("Ooops! Something went wrong!")
+      }
   }
   func save(name: String) -> Bool{
     guard let appDelegate =

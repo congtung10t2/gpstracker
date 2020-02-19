@@ -181,6 +181,8 @@ struct DataMap: View {
         self.presentationMode.wrappedValue.dismiss()
       }.position(x: 50, y:30)
       Button("Upload") {
+        let tracker = Tracker(locations: CoreDataManager.shared.locationShowing)
+        tracker.uploadToCloud()
         self.presentationMode.wrappedValue.dismiss()
       }.position(x: UIScreen.main.bounds.width - 100, y: 30)
     }

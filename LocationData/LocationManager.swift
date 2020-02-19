@@ -22,6 +22,7 @@ class LocationManager: NSObject {
     super.init();
     location = CLLocationManager();
     location?.distanceFilter = 10;
+    location?.allowsBackgroundLocationUpdates = true
   }
   
   func requestForLocation(){

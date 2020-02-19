@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-@objc class LocationModel: NSObject, Decodable{
+@objc class LocationModel: NSObject, Codable{
   var name: String
   var lat: Double
   var lng: Double
