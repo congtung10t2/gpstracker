@@ -17,12 +17,17 @@ class LocationManager: NSObject {
    var currentLocationName: String = "abc"
   @objc dynamic var myLocation : CLLocation? = nil
   var locationData : [LocationModel] = []
-  
+  private var isStartedDeferringUpdates = false
+  private var locationUpdateTime = 10.0 //second
+  private(set) var isBackgroundMode = false
   private override init() {
     super.init();
     location = CLLocationManager();
-    location?.distanceFilter = 10;
     location?.allowsBackgroundLocationUpdates = true
+    location?.pausesLocationUpdatesAutomatically = false
+    location?.distanceFilter = kCLDistanceFilterNone
+    location?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    location?.activityType = .automotiveNavigation
   }
   
   func requestForLocation(){
@@ -69,6 +74,10 @@ extension LocationManager : CLLocationManagerDelegate {
       
     }
     LocationManager.shared.myLocation = manager.location;
+    if isBackgroundMode && !isStartedDeferringUpdates && CLLocationManager.deferredLocationUpdatesAvailable() {
+       isStartedDeferringUpdates = true
+      self.location?.allowDeferredLocationUpdates(untilTraveled: CLLocationDistanceMax, timeout: locationUpdateTime)
+     }
   }
 }
 extension CLLocation {
