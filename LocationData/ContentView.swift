@@ -18,36 +18,40 @@ struct ContentView: View {
   var body: some View {
     
     HStack(alignment: .bottom){
+      if self.isUpdatingLocation == false {
+        Button(action: {
+          LocationManager.shared.stopLocation()
+          LocationManager.shared.requestForLocation()
+          LocationManager.shared.updatingLocation()
+          self.isUpdatingLocation = true
+          self.dataCancelled = false
+          self.dataSaved = false
+          self.hasRecorded = true
+          CoreDataManager.shared.locationAdded = []
+        }) {
+          Image("ic-play")
+          
+        }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
+      }
       
-      Button(action: {
-        LocationManager.shared.stopLocation()
-        LocationManager.shared.requestForLocation()
-        LocationManager.shared.updatingLocation()
-        self.isUpdatingLocation = true
-        self.dataCancelled = false
-        self.dataSaved = false
-        self.hasRecorded = true
-        CoreDataManager.shared.locationAdded = []
-      }) {
-        Image("ic-play")
-        
-      }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
       
       if self.isUpdatingLocation == true && dataSaved == false && dataCancelled == false {
         Button(action: {
+          self.isUpdatingLocation = false
+          LocationManager.shared.stopLocation()
           self.alert()
         }) {
           Image("ic-save-as")
         }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
       }
-      if self.isUpdatingLocation == true {
-        Button(action: {
-          LocationManager.shared.stopLocation()
-          self.isUpdatingLocation = false
-        }) {
-          Image("ic-cancel")
-        }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
-      }
+//      if self.isUpdatingLocation == true {
+//        Button(action: {
+//          LocationManager.shared.stopLocation()
+//          self.isUpdatingLocation = false
+//        }) {
+//          Image("ic-cancel")
+//        }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
+//      }
       if self.dataSaved && self.hasRecorded {
         Button(action: {
           self.showingData = true
@@ -70,19 +74,12 @@ struct ContentView: View {
       let answer = alert.textFields![0]
       if let text = answer.text {
         
-        LocationManager.shared.stopLocation()
         CoreDataManager.shared.save(name: text)
         self.dataSaved = true
       }
       if let controller = topMostViewController() {
         controller.dismiss(animated: true)
         self.dataCancelled = true
-      }
-    })
-    
-    alert.addAction(UIAlertAction(title: "Huỷ bỏ", style: .cancel) { _ in
-      if let controller = topMostViewController() {
-        controller.dismiss(animated: true)
       }
     })
     showAlert(alert: alert)
