@@ -37,6 +37,9 @@ class Tracker : Codable {
     }
     name = locations.first!.name;
   }
+  func toLocationModels() -> [LocationModel] {
+    return data.map({LocationModel(name: name, lat: $0.lat, lng: $0.lng, altitude: $0.altitude, timestamp: $0.timestamp, speed: $0.speed, course: $0.course, horizontalAccuracy: $0.horizontalAccuracy, verticalAccuracy: $0.verticalAccuracy)})
+  }
   func getDateAsString() -> String {
     let exactDate = NSDate(timeIntervalSince1970: TimeInterval(truncating: NSNumber(integerLiteral: Int(CLongLong(self.data.first!.timestamp)/1000) )))
      let dateFormatt = DateFormatter()

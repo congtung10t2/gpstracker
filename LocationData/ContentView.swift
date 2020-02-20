@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import Firebase
 struct ContentView: View {
   @State private var locationName: String = ""
   @State private var isUpdatingLocation: Bool = false
@@ -82,7 +83,9 @@ struct ContentView: View {
         self.dataCancelled = true
       }
     })
-    showAlert(alert: alert)
+    DispatchQueue.main.sync {
+      showAlert(alert: alert)
+    }
   }
   
   
@@ -104,6 +107,10 @@ struct AllTabView: View {
         Image(systemName: "doc.richtext")
         Text("History")
       }.tag(1)
+      Clouds().tabItem {
+        Image(systemName: "square.and.arrow.down.on.square.fill")
+        Text("Clouds")
+      }.tag(2)
     }
   }
 }
@@ -118,6 +125,7 @@ struct History: View {
             Text(data.name).font(.system(size: 20))
             Text(data.getDateAsString()).font(.system(size: 14)).foregroundColor(.gray)
           }.onTapGesture(perform: {
+            CoreDataManager.shared.fromCloudTab = false
             CoreDataManager.shared.locationShowing = CoreDataManager.shared.getDataByName(name: data.name)
             self.showingData = true
           }).sheet(isPresented: self.$showingData) {
@@ -139,6 +147,48 @@ struct History: View {
     items.remove(atOffsets: offsets)
   }
 }
+struct Clouds: View {
+@State private var showingData: Bool = false
+@State var items: [StorageReference] = []
+  var body: some View {
+    NavigationView {
+    List {
+      ForEach(items, id: \.self) { data in
+        VStack(alignment: .leading) {
+//        Text(data.name).font(.system(size: 20))
+//        Text(data.getDateAsString()).font(.system(size: 14)).foregroundColor(.gray)
+          Text(data.name)
+        }.onTapGesture(perform: {
+          
+          
+          data.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            do {
+              let decoder = JSONDecoder()
+              let tracker = try decoder.decode(Tracker.self, from: data!)
+              CoreDataManager.shared.fromCloudTab = true
+              CoreDataManager.shared.locationShowing = tracker.toLocationModels()
+              self.showingData = true
+            } catch {
+              
+            }
+            
+          }
+        }).sheet(isPresented: self.$showingData) {
+          
+          DataMap()
+        }
+      }
+      }.onAppear(perform: {
+        CoreDataManager.shared.getAllCloudsData { (value, error) in
+          if let value = value {
+            self.items = value
+            print(value)
+          }
+        }
+      })
+    }
+  }
+}
 struct AllTabViewView_Previews: PreviewProvider {
   static var previews: some View {
     AllTabView()
@@ -158,7 +208,7 @@ struct DataMap: View {
       Button("Dismiss") {
         self.presentationMode.wrappedValue.dismiss()
       }.position(x: 50, y:30)
-      if !(CoreDataManager.shared.retrieveFileLoaded()?.contains(CoreDataManager.shared.locationShowing.first!.name ))! {
+      if CoreDataManager.shared.shouldShowUpload() {
         Button("Upload") {
           let tracker = Tracker(locations: CoreDataManager.shared.locationShowing)
           let loading = topMostViewController()?.showLoading()
@@ -182,8 +232,10 @@ struct DataMap: View {
   private func alert(message: String) {
     let alert = UIAlertController(title: "Trackers", message: message, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Đồng ý", style: .default) {  [unowned alert] _ in })
+    DispatchQueue.main.sync {
 
-    showAlert(alert: alert)
+      showAlert(alert: alert)
+    }
   }
 }
 func showAlert(alert: UIAlertController) {

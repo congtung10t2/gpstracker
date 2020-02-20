@@ -45,9 +45,12 @@ struct MapView: UIViewRepresentable {
     Coordinator(self)
   }
   func addPolyline() -> MKPolyline {
-    var locations = CoreDataManager.shared.locationShowing.map { CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng) }
+    var locations = CoreDataManager.shared.locationShowing.sorted {
+      $0.timestamp < $1.timestamp
+    }
+    
 
-    return MKPolyline(coordinates: locations, count: locations.count)
+    return MKPolyline(coordinates: locations.map({CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng)}), count: locations.count)
     
   }
   
@@ -60,9 +63,10 @@ struct MapView: UIViewRepresentable {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer! {
       if(overlay is MKPolyline) {
-        let polylineRender = MKPolylineRenderer(overlay: overlay)
-        polylineRender.strokeColor = UIColor.red.withAlphaComponent(0.8)
-        return polylineRender
+        var pr = MKPolylineRenderer(overlay: overlay)
+        pr.strokeColor = UIColor.red
+        pr.lineWidth = 1
+        return pr
       }
       return nil
     }

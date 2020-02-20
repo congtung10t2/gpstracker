@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 import CoreData
+import Firebase
 public typealias DataCompletion<T> = (T?, NSError?) -> Void
 class CoreDataManager {
   static var shared = CoreDataManager()
   var locationData: [NSManagedObject] = []
   var fileNames: [NSManagedObject] = []
   var locationAdded: [NSManagedObject] = []
+  var fromCloudTab: Bool = false
   var locationShowing: [LocationModel] = []
   func markItLoaded(name: String) {
     guard let appDelegate =
@@ -42,6 +44,15 @@ class CoreDataManager {
     }catch{
       
     }
+  }
+  func shouldShowUpload() -> Bool {
+    if fromCloudTab {
+      return false
+    }
+    if !(CoreDataManager.shared.retrieveFileLoaded()?.contains(CoreDataManager.shared.locationShowing.first!.name ))! {
+      return true
+    }
+    return false
   }
   func save(locationModel: LocationModel) {
     
@@ -146,6 +157,25 @@ class CoreDataManager {
       return models
     }
     return []
+    
+  }
+  func getAllCloudsData(completion: @escaping ([StorageReference]?, Error?) -> Void){
+    let storage = Storage.storage()
+    let storageReference = storage.reference().child("json")
+   
+    storageReference.listAll { (result, error) in
+      if let error = error {
+        // ...
+        completion(nil, error)
+      }
+      for prefix in result.prefixes {
+        // The prefixes under storageReference.
+        // You may call listAll(completion:) recursively on them.
+      }
+      
+      completion(result.items, nil)
+      
+    }
     
   }
   func getDataByName(name: String) -> [LocationModel]{
