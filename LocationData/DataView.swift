@@ -27,7 +27,6 @@ struct MapView: UIViewRepresentable {
     let overlays = mapView.overlays
     mapView.removeOverlays(overlays)
     mapView.delegate = context.coordinator
-    
     let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
     let first = CoreDataManager.shared.locationShowing.first
     let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: first!.lat, longitude: first!.lng), span: span)

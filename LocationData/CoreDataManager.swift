@@ -11,14 +11,38 @@ import UIKit
 import CoreData
 public typealias DataCompletion<T> = (T?, NSError?) -> Void
 class CoreDataManager {
-
-
-  
   static var shared = CoreDataManager()
   var locationData: [NSManagedObject] = []
+  var fileNames: [NSManagedObject] = []
   var locationAdded: [NSManagedObject] = []
   var locationShowing: [LocationModel] = []
-
+  func markItLoaded(name: String) {
+    guard let appDelegate =
+      UIApplication.shared.delegate as? AppDelegate else {
+        return
+    }
+    
+    // 1
+    let managedContext =
+      appDelegate.persistentContainer.viewContext
+    
+    // 2
+    let entity =
+      NSEntityDescription.entity(forEntityName: "Uploaded",
+                                 in: managedContext)!
+    
+    let location = NSManagedObject(entity: entity,
+                                   insertInto: managedContext)
+    
+    // 3
+    location.setValue(name, forKeyPath: "name")
+    managedContext.insert(location)
+    do {
+      try managedContext.save()
+    }catch{
+      
+    }
+  }
   func save(locationModel: LocationModel) {
     
     guard let appDelegate =
@@ -50,33 +74,6 @@ class CoreDataManager {
     
     locationAdded.append(location)
     
-  }
-  func saveUploadedFilesSet(fileName:[String : Any]) {
-      let file: FileHandle? = FileHandle(forWritingAtPath: "\(fileName).json")
-
-      if file != nil {
-          // Set the data we want to write
-          do{
-              if let jsonData = try JSONSerialization.data(withJSONObject: fileName, options: .init(rawValue: 0)) as? Data
-              {
-                  // Check if everything went well
-                  print(NSString(data: jsonData, encoding: 1)!)
-                  file?.write(jsonData)
-
-                  // Do something cool with the new JSON data
-              }
-          }
-          catch {
-
-          }
-          // Write it to the file
-
-          // Close the file
-          file?.closeFile()
-      }
-      else {
-          print("Ooops! Something went wrong!")
-      }
   }
   func save(name: String) -> Bool{
     guard let appDelegate =
@@ -118,11 +115,6 @@ class CoreDataManager {
     //3
     do {
       locationData = try managedContext.fetch(fetchRequest)
-      //      for location in locationData {
-      //        if location.locationModel != nil {Ơ}
-      //        let model = location.locationModel
-      //        print(model);
-      //      }
       return locationData.filter({
         $0 != nil
         
@@ -202,6 +194,34 @@ class CoreDataManager {
       return
     }
   }
+  func retrieveFileLoaded() -> [String]? {
+    //1
+    guard let appDelegate =
+      UIApplication.shared.delegate as? AppDelegate else {
+        return nil
+    }
+    
+    let managedContext =
+      appDelegate.persistentContainer.viewContext
+    
+    //2
+    let fetchRequest =
+      NSFetchRequest<NSManagedObject>(entityName: "Uploaded")
+    
+    //3
+    do {
+      fileNames = try managedContext.fetch(fetchRequest)
+      return fileNames.filter({
+        $0.locationName != nil
+        
+      }).map({$0.locationName!})
+      
+    } catch let error as NSError {
+      
+      print("Could not fetch. \(error), \(error.userInfo)")
+      return nil
+    }
+  }
 }
 
 extension NSManagedObject {
@@ -221,5 +241,13 @@ extension NSManagedObject {
       name = self.value(forKey: "name") as! String
     }
     return LocationModel(name: name, lat: lat, lng: lng, altitude: altitude, timestamp: timestamp, speed: speed, course: course, horizontalAccuracy: horizontalAccuracy, verticalAccuracy: verticalAccuracy)
+  }
+  
+  var locationName: String?{
+    if(value(forKey: "name") != nil){
+      let name = self.value(forKey: "name") as! String
+      return name
+    }
+    return nil
   }
 }

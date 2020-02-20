@@ -37,6 +37,12 @@ class Tracker : Codable {
     }
     name = locations.first!.name;
   }
+  func getDateAsString() -> String {
+    let exactDate = NSDate(timeIntervalSince1970: TimeInterval(truncating: NSNumber(integerLiteral: Int(CLongLong(self.data.first!.timestamp)/1000) )))
+     let dateFormatt = DateFormatter()
+     dateFormatt.dateFormat = "dd-MM-yyy hh:mm:ss a"
+    return dateFormatt.string(from: exactDate as Date)
+  }
   func writeToFile(){
     do {
       let fileURL = try FileManager.default
@@ -49,37 +55,36 @@ class Tracker : Codable {
       print("JSONSave error of \(error)")
     }
   }
-  func uploadToCloud(){
+  func getAllFiles(){
+    let storage = Storage.storage()
+    let storageRef = storage.reference()
+    
+  }
+  func uploadToCloud(completion: @escaping (StorageMetadata?, Error?) -> Void){
     let storage = Storage.storage()
     let storageRef = storage.reference()
     var data: Data?
-  do {
-    let fileURL = try FileManager.default
-      .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-      .appendingPathComponent(name)
-  
-    let encoder = try JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
-    data = try encoder.encode(self)
+    do {
+      let fileURL = try FileManager.default
+        .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        .appendingPathComponent(name)
+      
+      let encoder = try JSONEncoder()
+      encoder.outputFormatting = .prettyPrinted
+      data = try encoder.encode(self)
     } catch {}
     // Create a reference to the file you want to upload
-    let riversRef = storageRef.child("memory/\(name).json")
-
+    let riversRef = storageRef.child("json/\(name+getDateAsString()).json")
+    
     // Upload the file to the path "images/rivers.jpg"
     let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
       guard let metadata = metadata else {
-        // Uh-oh, an error occurred!
+        completion(nil, error)
         return
       }
-      // Metadata contains file metadata such as size, content-type.
-      let size = metadata.size
-      // You can also access to download URL after upload.
-      riversRef.downloadURL { (url, error) in
-        guard let downloadURL = url else {
-          // Uh-oh, an error occurred!
-          return
-        }
-      }
+      CoreDataManager.shared.markItLoaded(name: self.name)
+      completion(metadata, error)
+     
     }
   }
   func uploadFile(){
@@ -106,9 +111,7 @@ class Tracker : Codable {
         print("Uh-oh, an error occurred!")
         return
       }
-      // Metadata contains file metadata such as size, content-type.
       let size = metadata.size
-      // You can also access to download URL after upload.
       riversRef.downloadURL { (url, error) in
         guard let downloadURL = url else {
           

@@ -3,34 +3,36 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>854874999420-3k56lv5euh2um8bscsronnbj1hkkbatj.apps.googleusercontent.com</string>
+	<string>83684795305-ua98jm6d1gkqhmemffepurt9ai8o0lml.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.854874999420-3k56lv5euh2um8bscsronnbj1hkkbatj</string>
+	<string>com.googleusercontent.apps.83684795305-ua98jm6d1gkqhmemffepurt9ai8o0lml</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>83684795305-v3phkr55hd5453rbsdimr0p6ls4e8u4o.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCzZGuZwSjpEH8R9_Bv0uGaSXOp02PgiCU</string>
+	<string>AIzaSyCfUnr_UPBXS6SYeywaDdtz8Xh9vO3l05k</string>
 	<key>GCM_SENDER_ID</key>
-	<string>854874999420</string>
+	<string>83684795305</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.congtungit.LocationData</string>
 	<key>PROJECT_ID</key>
-	<string>location-data-7bad6</string>
+	<string>gpslogger-b23b4</string>
 	<key>STORAGE_BUCKET</key>
-	<string>location-data-7bad6.appspot.com</string>
+	<string>gpslogger-b23b4.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:854874999420:ios:ca16b2d497c8253e5917f9</string>
+	<string>1:83684795305:ios:e67e81253dc1d6cd33dab8</string>
 	<key>DATABASE_URL</key>
-	<string>https://location-data-7bad6.firebaseio.com</string>
+	<string>https://gpslogger-b23b4.firebaseio.com</string>
 </dict>
 </plist>

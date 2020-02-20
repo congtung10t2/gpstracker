@@ -7,6 +7,7 @@ target 'LocationData' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Storage'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'MBProgressHUD', '~> 1.1.0'
   # Pods for LocationData
 
 end

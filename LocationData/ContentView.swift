@@ -48,26 +48,6 @@ struct ContentView: View {
           Image("ic-cancel")
         }.frame(width: 100, height: 100, alignment: .bottom).padding(.bottom, 30)
       }
-      
-      //      if self.isUpdatingLocation == false && self.dataSaved == false  && self.hasRecorded && self.dataCancelled == false{
-      //        HStack(alignment: .top) {
-      //          TextField("Nhập tên bản ghi", text: $locationName).frame(width: 150, height: 20, alignment: .leading)
-      //          Button(action: {
-      //            if(CoreDataManager.shared.save(name: self.locationName)) {
-      //              self.dataSaved = true
-      //            }
-      //          }) {
-      //            Text("Save")
-      //          }.frame(width: 50, height: 20, alignment: .leading)
-      //          Button(action: {
-      //            CoreDataManager.shared.cancel()
-      //            self.dataCancelled = true
-      //          }) {
-      //            Text("Cancel")
-      //          }
-      //        }
-      //      }
-      //      Divider().opacity(0)
       if self.dataSaved && self.hasRecorded {
         Button(action: {
           self.showingData = true
@@ -107,6 +87,7 @@ struct ContentView: View {
     })
     showAlert(alert: alert)
   }
+  
   
 }
 
@@ -180,14 +161,33 @@ struct DataMap: View {
       Button("Dismiss") {
         self.presentationMode.wrappedValue.dismiss()
       }.position(x: 50, y:30)
-      Button("Upload") {
-        let tracker = Tracker(locations: CoreDataManager.shared.locationShowing)
-        tracker.uploadToCloud()
-        self.presentationMode.wrappedValue.dismiss()
-      }.position(x: UIScreen.main.bounds.width - 100, y: 30)
+      if !(CoreDataManager.shared.retrieveFileLoaded()?.contains(CoreDataManager.shared.locationShowing.first!.name ))! {
+        Button("Upload") {
+          let tracker = Tracker(locations: CoreDataManager.shared.locationShowing)
+          let loading = topMostViewController()?.showLoading()
+          tracker.uploadToCloud() { (data, error) in
+            if let loading = loading {
+              topMostViewController()?.hideLoading(hud: loading)
+            }
+            if let error = error {
+              self.alert(message: "Tải lên thất bại")
+            } else {
+              self.alert(message: "Tải lên thành công")
+            }
+            
+          }
+          self.presentationMode.wrappedValue.dismiss()
+        }.position(x: UIScreen.main.bounds.width - 100, y: 30)
+      }
+      
     }
   }
-  
+  private func alert(message: String) {
+    let alert = UIAlertController(title: "Trackers", message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Đồng ý", style: .default) {  [unowned alert] _ in })
+
+    showAlert(alert: alert)
+  }
 }
 func showAlert(alert: UIAlertController) {
   if let controller = topMostViewController() {
