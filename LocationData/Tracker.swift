@@ -15,8 +15,9 @@ class LocationRaw : Codable{
   var timestamp: CLongLong!
   var speed: Double!
   var course: Double!
-  var horizontalAccuracy: Double!
-  var verticalAccuracy: Double!
+  var horizontalAccuracy: Double?
+  var verticalAccuracy: Double?
+  var accuracy: Double?
   
 }
 class Tracker : Codable {
@@ -38,7 +39,9 @@ class Tracker : Codable {
     name = locations.first!.name;
   }
   func toLocationModels() -> [LocationModel] {
-    return data.map({LocationModel(name: name, lat: $0.lat, lng: $0.lng, altitude: $0.altitude, timestamp: $0.timestamp, speed: $0.speed, course: $0.course, horizontalAccuracy: $0.horizontalAccuracy, verticalAccuracy: $0.verticalAccuracy)})
+    return data.map({
+            LocationModel(name: name, lat: $0.lat, lng: $0.lng, altitude: $0.altitude, timestamp: $0.timestamp, speed: $0.speed, course: $0.course, horizontalAccuracy: $0.horizontalAccuracy ?? $0.accuracy ?? 0, verticalAccuracy: $0.verticalAccuracy ?? $0.accuracy ?? 0)
+       })
   }
   func getDateAsString() -> String {
     let exactDate = NSDate(timeIntervalSince1970: TimeInterval(truncating: NSNumber(integerLiteral: Int(CLongLong(self.data.first!.timestamp)/1000) )))

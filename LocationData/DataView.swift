@@ -48,8 +48,6 @@ struct MapView: UIViewRepresentable {
     var locations = CoreDataManager.shared.locationShowing.sorted {
       $0.timestamp < $1.timestamp
     }
-    
-
     return MKPolyline(coordinates: locations.map({CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng)}), count: locations.count)
     
   }

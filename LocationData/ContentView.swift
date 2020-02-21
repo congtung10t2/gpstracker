@@ -83,7 +83,7 @@ struct ContentView: View {
         self.dataCancelled = true
       }
     })
-    DispatchQueue.main.sync {
+    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
       showAlert(alert: alert)
     }
   }
@@ -232,7 +232,7 @@ struct DataMap: View {
   private func alert(message: String) {
     let alert = UIAlertController(title: "Trackers", message: message, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Đồng ý", style: .default) {  [unowned alert] _ in })
-    DispatchQueue.main.sync {
+    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
 
       showAlert(alert: alert)
     }
