@@ -161,7 +161,7 @@ struct Clouds: View {
         }.onTapGesture(perform: {
           
           
-          data.getData(maxSize: 1 * 1024 * 1024) { data, error in
+          data.getData(maxSize: 10 * 1024 * 1024) { data, error in
             do {
               let decoder = JSONDecoder()
               let tracker = try decoder.decode(Tracker.self, from: data!)
